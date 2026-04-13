@@ -32,4 +32,16 @@ public class UserService {
 
     }
 
+    public Long login(UserJoinRequest request) {
+
+        User loginUser = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("회원 정보가 일치하지 않습니다."));
+
+        if (!loginUser.getPassword().equals(request.getPassword())) {
+            throw new RuntimeException("회원 정보가 일치하지 않습니다.");
+        }
+
+        return loginUser.getId();
+
+    }
+
 }
